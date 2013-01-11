@@ -5,15 +5,20 @@
 
 class ClockConfig {
     public:
-        ClockConfig(const int hours, int start, const int goal);
+        ClockConfig(int hours, int start, int goal);
         ClockConfig(const ClockConfig &other);
 
+        bool operator==(const ClockConfig &other) const;
+        bool operator!=(const ClockConfig &other) const;
+        bool operator<(const ClockConfig &other) const;
+
+        void display() const;
         bool isGoal() const;
         void nextConfigs(std::vector<ClockConfig>& out) const;
 
     private:
-        const int hours;
-        const int goal;
+        int hours;
+        int goal;
         int state;
 };
 

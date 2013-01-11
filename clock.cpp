@@ -44,9 +44,8 @@ int main(int argc, const char* argv[]) {
     solver.solve(solution);
 
     // Display each step of the solution
-    for( int i = 0; i < solution.size(); ++i ) {
+    for( unsigned int i = 0; i < solution.size(); ++i ) {
         cout << "Step " << i << ": ";
         solution.at(i).display();
-        cout << endl;
     }
 }
