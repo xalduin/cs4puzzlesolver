@@ -1,0 +1,45 @@
+Matthew Swain - mds1482
+
+Usage:
+    clock hours start stop
+ex: clock 12 4 10
+
+Sample run:
+
+%clock 12 2 4
+Step 0: 2
+Step 1: 3
+Step 2: 4
+
+Design:
+    The puzzle's job is to provide the solver with methods to retrieve neighbor
+    configurations as well as a method to check if the current puzzle config
+    meets the specified goal.
+
+    The given a puzzle config, the solver uses a breadth first search to find
+    the shortest path solution to the specified goal. It doesn't know anything
+    about the puzzle except for the methods given to it by the puzzle config.
+    These methods include retrieving neighbor configs and checking for a goal
+    state.
+
+    The config in this part of the project has an integer as its current state
+    which represents the hour that the clock is currently set to. It also keeps
+    track of the number of hours on the clock as well as the goal that the
+    program is trying to reach, which in this case is an integer hour.
+
+    The Solver uses these methods from the ClockConfig:
+
+        bool isGoal() const;
+        void nextConfigs(std::vector<ClockConfig>& out) const;
+        bool operator!=(const ClockConfig &other) const;
+        bool operator<(const ClockConfig &other) const;
+
+    The < operator is indirectly used by the solver through the use of the map
+    container.
+
+Revision history:
+
+
+
+
+
