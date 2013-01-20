@@ -1,5 +1,8 @@
 Matthew Swain - mds1482
 
+Clock:
+======
+
 Usage:
     clock hours start stop
 ex: clock 12 4 10
@@ -11,31 +14,60 @@ Step 0: 2
 Step 1: 3
 Step 2: 4
 
+
+Water Puzzle:
+=============
+
+Usage:
+    water goal_volumn capacity1 capacity2 capacity3 capacityN
+
+Sample run:
+
+%water 4 3 5
+Step 0: 0 0
+Step 1: 0 5
+Step 2: 3 2
+Step 3: 0 2
+Step 4: 2 0
+Step 5: 2 5
+Step 6: 3 4
+
+
+
 Design:
     The puzzle's job is to provide the solver with methods to retrieve neighbor
-    configurations as well as a method to check if the current puzzle config
+    configurations as well as a method to check if the current puzzle state
     meets the specified goal.
 
-    The given a puzzle config, the solver uses a breadth first search to find
-    the shortest path solution to the specified goal. It doesn't know anything
-    about the puzzle except for the methods given to it by the puzzle config.
-    These methods include retrieving neighbor configs and checking for a goal
-    state.
+    Given a puzzle config and a starting state, the solver uses a breadth first
+    search to find the shortest path solution to the specified goal. It doesn't
+    know anything about the puzzle except for the methods given to it by the
+    puzzle config. These methods include retrieving neighbor configs and
+    checking for a goal state.
 
-    The config in this part of the project has an integer as its current state
-    which represents the hour that the clock is currently set to. It also keeps
-    track of the number of hours on the clock as well as the goal that the
-    program is trying to reach, which in this case is an integer hour.
+    The configs are each able to use a different value for a "state value"
+    because they extend from a templated Config class and the solveConfig
+    function is also templated. Internally, the Config classes store only
+    what is necessary to determine whether the goal has been reached and
+    whatever information is needed to generate neighbor configurations in
+    addition to the state value that is supplied to them.
 
-    The Solver uses these methods from the ClockConfig:
+    The Solver uses these methods from Config:
 
-        bool isGoal() const;
-        void nextConfigs(std::vector<ClockConfig>& out) const;
-        bool operator!=(const ClockConfig &other) const;
-        bool operator<(const ClockConfig &other) const;
+        bool isGoal(const T &state) const;
+        void nextConfigs(std::vector<T> &out) const;
 
-    The < operator is indirectly used by the solver through the use of the map
-    container.
+    In this case, T refers to the variable type that is used to store the state
+    of the puzzle being solved. For the clock puzzle, T is an int while for the
+    water puzzle, T is of the type std::vector<int> to represent how much water
+    is being held by multiple containers.
+
+
+    The clock puzzle was update so that the ClockConfig inherited from the
+    Config class. Instead of storing the state of the puzzle internally and
+    creating multiple copies of the ClockConfig object, only one copy is needed
+    now. Instead of multiple ClockConfigs, the solver now uses the int type
+    (through the template) to represent the state of the puzzle.
 
 Revision history:
 
