@@ -10,7 +10,9 @@
 using namespace std;
 
 /**
- * @author: Matthew Swain mds1482
+ * Contains the solveConfig method used for solving puzzles that follow the
+ * Config interface
+ * @author Matthew Swain mds1482
  */
 
 /**
@@ -68,8 +70,6 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
         current = visited.find(current)->second;
         out.insert(out.begin(), current);
     }
-
-    // 'current' doesn't refer to memory on the heap so delete isn't necessary
 
     return true;
 }

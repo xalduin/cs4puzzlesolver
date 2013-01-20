@@ -22,21 +22,21 @@ class ClockConfig : public Config<int> {
          * Displays the given state of the clock
          * @param state hour of the clock to be shown
          */
-        void display(const int &state) const;
+        virtual void display(const int &state) const;
 
         /**
          * Checks whether the goal condition for the clock has been met
          * @param state hour to check equality with the specified goal hour
          * @result whether the state matches the goal
          */
-        bool isGoal(const int &state) const;
+        virtual bool isGoal(const int &state) const;
 
         /**
          * Returns the 2 neighboring states for the given input state
          * @param state hour on the clock to find neighbors for
          * @param out vector to add the neighboring states to
          */
-        void nextConfigs(const int &state, std::vector<int> &out) const;
+        virtual void nextConfigs(const int &state, std::vector<int> &out) const;
 
     private:
         int hours;
