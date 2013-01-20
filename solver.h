@@ -9,8 +9,21 @@
 
 using namespace std;
 
+/**
+ * @author: Matthew Swain mds1482
+ */
+
+/**
+ * Finds the shortest path solution using breadth first search for the given
+ *  puzzle information or returns false if no solution can be found
+ *
+ * @param config config class used to get information about the puzzle
+ * @param start starting state of the puzzle
+ * @param out vector where in which the solution will be stored
+ * @result whether or not the puzzle was solved
+ */
 template <typename T>
-void solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
+bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
     queue<T> next;
 
     // Key = current state, value = parent state
@@ -38,6 +51,11 @@ void solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
                 next.push(neighbor);
         }
 
+        // Make sure there are more configs to check
+        // If not, there is no solution for this puzzle
+        if( next.empty() )
+            return false;
+
         current = next.front();
         next.pop();
     }
@@ -51,8 +69,9 @@ void solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
         out.insert(out.begin(), current);
     }
 
-    // Doesn't refer to memory on the heap so delete isn't necessary
-    current = 0;
+    // 'current' doesn't refer to memory on the heap so delete isn't necessary
+
+    return true;
 }
 
 
