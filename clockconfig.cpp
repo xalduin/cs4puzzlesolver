@@ -4,45 +4,29 @@
 
 using namespace std;
 
-ClockConfig::ClockConfig(int h, int s, int g) :
+ClockConfig::ClockConfig(int h, int g) :
     hours(h),
     goal(g)
-{
-    if( s <= 0 )
-        state = hours - s;
-    else if( s > hours )
-        state = s - hours;
-    else
-        state = s;
-}
-
-ClockConfig::ClockConfig(const ClockConfig &other) :
-    hours(other.hours),
-    goal(other.goal),
-    state(other.state)
 {}
 
-bool ClockConfig::operator==(const ClockConfig &other) const {
-    return hours == other.hours && goal == other.goal && state == other.state;
+void ClockConfig::display(const int &state) const {
+    std::cout << state << std::endl;
 }
 
-bool ClockConfig::operator!=(const ClockConfig &other) const {
-    return !( *this == other );
-}
-
-bool ClockConfig::operator<(const ClockConfig &other) const {
-    return state < other.state;
-}
-
-void ClockConfig::display() const {
-    cout << state << endl;
-}
-
-bool ClockConfig::isGoal() const {
+bool ClockConfig::isGoal(const int &state) const {
     return state == goal;
 }
 
-void ClockConfig::nextConfigs(vector<ClockConfig> &out) const {
-    out.push_back(ClockConfig(hours, state-1, goal));
-    out.push_back(ClockConfig(hours, state+1, goal));
+void ClockConfig::nextConfigs(const int &state, std::vector<int> &out) const {
+    int before = state - 1;
+    int after  = state + 1;
+
+    if( before < 1 )
+        before = hours - before;
+
+    if( after > hours )
+        after -= hours;
+
+    out.push_back(before);
+    out.push_back(after);
 }

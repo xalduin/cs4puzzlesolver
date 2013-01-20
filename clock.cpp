@@ -37,15 +37,14 @@ int main(int argc, const char* argv[]) {
         return EXIT_SUCCESS;
     }
 
-    ClockConfig startConfig(hours, start, stop);
-    Solver solver(startConfig);
+    ClockConfig config(hours, stop);
 
-    vector<ClockConfig> solution;
-    solver.solve(solution);
+    vector<int> solution;
+    solveConfig(config, start, solution);
 
     // Display each step of the solution
     for( unsigned int i = 0; i < solution.size(); ++i ) {
         cout << "Step " << i << ": ";
-        solution.at(i).display();
+        config.display(solution.at(i));
     }
 }

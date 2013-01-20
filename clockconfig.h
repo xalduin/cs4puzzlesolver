@@ -1,25 +1,47 @@
 #ifndef CLOCKCONFIG_H
 #define CLOCKCONFIG_H
 
+#include "config.h"
 #include <vector>
+#include <iostream>
 
-class ClockConfig {
+/**
+ * ClockConfig represents a Config for the clock puzzle
+ * @author Matthew Swain mds1482
+ */
+class ClockConfig : public Config<int> {
     public:
-        ClockConfig(int hours, int start, int goal);
-        ClockConfig(const ClockConfig &other);
+        /**
+         * Constructs a ClockConfig object with the given information
+         * @param hours number of hours on the clock
+         * @param goal the hour that is trying to be reached
+         */
+        ClockConfig(int hours, int goal);
 
-        bool operator==(const ClockConfig &other) const;
-        bool operator!=(const ClockConfig &other) const;
-        bool operator<(const ClockConfig &other) const;
+        /**
+         * Displays the given state of the clock
+         * @param state hour of the clock to be shown
+         */
+        void display(const int &state) const;
 
-        void display() const;
-        bool isGoal() const;
-        void nextConfigs(std::vector<ClockConfig>& out) const;
+        /**
+         * Checks whether the goal condition for the clock has been met
+         * @param state hour to check equality with the specified goal hour
+         * @result whether the state matches the goal
+         */
+        bool isGoal(const int &state) const;
+
+        /**
+         * Returns the 2 neighboring states for the given input state
+         * @param state hour on the clock to find neighbors for
+         * @param out vector to add the neighboring states to
+         */
+        void nextConfigs(const int &state, std::vector<int> &out) const;
 
     private:
         int hours;
         int goal;
-        int state;
 };
+
 
 #endif
