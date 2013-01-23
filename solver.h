@@ -42,15 +42,16 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
         config.nextConfigs(current, neighbors);
 
         // Add all new neighbors to the queue
-        for( unsigned int i = 0; i < neighbors.size(); ++i ) {
-            T &neighbor = neighbors[i];
+        for( auto &neighbor : neighbors ) {
 
-            bool insert = visited.insert(pair<T, T>(neighbor, current)).second;
+            bool inserted = visited.insert(pair<T, T>(neighbor, current)).second;
             
             // Add to the "to be visited" list unless neighbor has been
             // visited
-            if( insert )
-                next.push(neighbor);
+            // std::move can be used since the value was copied into the map
+            // and the neighbor value won't be used again
+            if( inserted )
+                next.push(std::move(neighbor));
         }
 
         // Make sure there are more configs to check

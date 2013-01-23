@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
             return EXIT_SUCCESS;
         }
 
-        containers.push_back(capacity);
+        containers.emplace_back(capacity);
     }
 
     WaterConfig config(goal, containers);

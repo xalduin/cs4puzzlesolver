@@ -12,17 +12,15 @@ WaterConfig::WaterConfig(int g, wc_state &c) :
 {}
 
 void WaterConfig::display(const wc_state &state) const {
-    wc_state::const_iterator iter;
-    for( iter = state.begin(); iter != state.end(); ++iter )
-        cout << " " << *iter;
+    for( auto &container : state )
+        cout << " " << container;
 
     cout << endl;
 }
 
 bool WaterConfig::isGoal(const wc_state &state) const {
-    wc_state::const_iterator iter;
-    for( iter = state.begin(); iter != state.end(); ++iter )
-        if( *iter == goal )
+    for( auto &container : state )
+        if( container == goal )
             return true;
 
     return false;
@@ -36,17 +34,15 @@ void WaterConfig::nextConfigs(const wc_state &state, vector<wc_state> &out) cons
         // Change in state 1: dump bucket
         // Only dump the bucket if there's something in it
         if( state[current] > 0 ) {
-            wc_state dumpState(state);
-            dumpState[current] = 0;
-            out.push_back(dumpState);
+            out.emplace_back(state);
+            out.back()[current] = 0;
         }
 
         // Change in state 2: fill bucket
         // Only fill if bucket isn't already full
         if( state[current] < capacity[current] ) {
-            wc_state fillState(state);
-            fillState[current] = capacity[current];
-            out.push_back(fillState);
+            out.emplace_back(state);
+            out.back()[current] = capacity[current];
         }
 
         // Change in state 3: fill from another bucket
@@ -61,17 +57,15 @@ void WaterConfig::nextConfigs(const wc_state &state, vector<wc_state> &out) cons
             if( other == current || state[other] == 0 )
                 continue;
 
-            wc_state pourState(state);
+            out.emplace_back(state);
 
             // The amount being transferred is either:
             //  -Enough to fill the current bucket
             //  -Enough to empty the 'other' bucket
             int amount = min(capacity[current] - state[current], state[other]);
 
-            pourState[current] = state[current] + amount;
-            pourState[other]   = state[other] - amount;
-
-            out.push_back(pourState);
+            out.back()[current] = state[current] + amount;
+            out.back()[other] = state[other] - amount;
         }
     }
 }
