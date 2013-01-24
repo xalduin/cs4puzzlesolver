@@ -33,7 +33,7 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
 
     // The starting config doesn't really have a parent, but it needs to be
     // in the map
-    visited.insert(pair<T, T>(start, start));
+    visited.emplace(start, start);
 
     // Find the shortest path solution
     T current = start;
@@ -44,7 +44,7 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
         // Add all new neighbors to the queue
         for( auto &neighbor : neighbors ) {
 
-            bool inserted = visited.insert(pair<T, T>(neighbor, current)).second;
+            bool inserted = visited.emplace(neighbor, current).second;
             
             // Add to the "to be visited" list unless neighbor has been
             // visited
@@ -69,7 +69,7 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
     // of the result vector
     while( current != start ) {
         current = visited.find(current)->second;
-        out.insert(out.begin(), current);
+        out.emplace(out.cbegin(), current);
     }
 
     return true;
