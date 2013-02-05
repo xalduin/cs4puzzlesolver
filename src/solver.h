@@ -13,14 +13,30 @@ using namespace boost;
 
 // Allows for vectors to be used in unordered maps
 namespace std {
-   template <>
-       class hash<vector<int>>{
-       public :
-           size_t operator()(const vector<int> &v ) const
-           {
-             return hash_range(v.begin(), v.end());
-           }
-   };
+    template <>
+    struct hash<vector<int>>{
+    public :
+        size_t operator()(const vector<int> &v ) const
+        {
+            return hash_range(v.begin(), v.end());
+        }
+    };
+
+    /*template <>
+    class hash<vector<char>> {
+    public:
+        size_t operator()(const vector<char> &v) const {
+            return hash_range(v.begin(), v.end());
+        }
+    };*/
+
+    template <>
+    struct hash<vector<vector<char>>>{
+    public:
+        size_t operator()(const vector<vector<char>> &v ) const {
+            return hash_range(v.begin(), v.end());
+        }
+    };
 }
 
 /**
@@ -88,11 +104,6 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
 
     return true;
 }
-
-
-
-
-
 
 
 #endif
