@@ -3,11 +3,25 @@
 
 #include "config.h"
 
-#include <map>
+#include <unordered_map>
 #include <queue>
 #include <vector>
+#include <boost/functional/hash.hpp>
 
 using namespace std;
+using namespace boost;
+
+// Allows for vectors to be used in unordered maps
+namespace std {
+   template <>
+       class hash<vector<int>>{
+       public :
+           size_t operator()(const vector<int> &v ) const
+           {
+             return hash_range(v.begin(), v.end());
+           }
+   };
+}
 
 /**
  * Contains the solveConfig method used for solving puzzles that follow the
@@ -29,7 +43,7 @@ bool solveConfig(const Config<T> &config, const T &start, vector<T> &out) {
     queue<T> next;
 
     // Key = current state, value = parent state
-    map<T, T> visited;
+    unordered_map<T, T> visited;
 
     // The starting config doesn't really have a parent, but it needs to be
     // in the map
