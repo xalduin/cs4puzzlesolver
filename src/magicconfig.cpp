@@ -34,7 +34,11 @@ void MagicConfig::display(const mc_state &state) const {
 }
 
 bool MagicConfig::isGoal(const mc_state &state) const {
-    return state == goalConfig;
+    for( int i = 0; i < configSize; ++i ) {
+        if( state[i] != goalConfig[i] )
+            return false;
+    }
+    return true;
 }
 
 void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
@@ -44,7 +48,9 @@ void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
     // Three methods of generating an alternate configuration
 
     // Step one: swap the bottom half and top half
-    mc_state newState(s); 
+    mc_state newState;
+    copy(s.begin(), s.end(), newState.begin());
+    memcpy(&newState, &s, configSize);
     for( int i = 0; i < halfSize; ++i ) {
         swap(newState[i], newState[configSize-i-1]);
     }
@@ -54,7 +60,7 @@ void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
     // 1 2 3 4 -> 4 1 2 3
     // 8 7 6 5 -> 5 8 7 6
     
-    newState = s;
+    copy(s.begin(), s.end(), newState.begin());
     for( int i = 0; i < halfSize-1; i++ ) {
         swap(newState[halfSize - i], newState[halfSize - 1 - i]);
         swap(newState[halfSize + i], newState[halfSize + 1 + i]);
@@ -65,7 +71,7 @@ void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
     // 1 2 3 4 -> 1 7 2 4
     // 8 7 6 5 -> 8 6 3 5
 
-    newState = s;
+    copy(s.begin(), s.end(), newState.begin());
     swap(newState[quarterSize-1], newState[quarterSize]);
     swap(newState[quarterSize-1], newState[halfSize+quarterSize]);
     swap(newState[halfSize+quarterSize], newState[halfSize+quarterSize-1]);

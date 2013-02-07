@@ -3,9 +3,22 @@
 
 
 #include "config.h"
+#include <array>
 #include <vector>
+#include <boost/functional/hash.hpp>
 
-typedef std::vector<int> mc_state;
+typedef std::array<int, 8> mc_state;
+
+namespace std {
+    template <>
+    struct hash<mc_state>{
+    public :
+        size_t operator()(const mc_state &v ) const
+        {
+            return boost::hash_range(v.begin(), v.end());
+        }
+    };
+}
 
 class MagicConfig : public Config<mc_state> {
 public:

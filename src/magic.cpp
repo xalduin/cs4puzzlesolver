@@ -27,17 +27,23 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
 
-        // Check to see if the value was previously specified
-        for( auto &val : goalState ) {
+        for( int j = 0; j < i - 1; ++j ) {
+            int &val = goalState[j];
             if( val == value ) {
                 cerr << "Entered duplicate value: " << value << endl;
                 return EXIT_FAILURE;
             }
         }
 
-        goalState.push_back(value);
+        goalState[i-1] = value;
     }
     MagicConfig config(goalState);
+
+    cout << "Starting config" << endl;
+    config.display(startState);
+
+    cout << "Ending state" << endl;
+    config.display(goalState);
 
     // There should always be a solution to this puzzle
     vector<mc_state> solution;
