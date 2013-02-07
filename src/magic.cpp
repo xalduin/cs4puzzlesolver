@@ -9,9 +9,13 @@ using namespace std;
 // Program name + 8 numbers
 const int NUM_ARGS = MagicConfig::configSize + 1;
 const char *USAGE_STRING = "magic # # # # # # # #";
-const mc_state startState = {1, 2, 3, 4, 5, 6, 7, 8};
 
 int main(int argc, char *argv[]) {
+
+    mc_state startState;
+    for( int i = 0; i < MagicConfig::configSize; ++i ) {
+        startState[i] = i+1;
+    }
 
     if( argc != NUM_ARGS ) {
         cout << "Usage: " << USAGE_STRING << endl;

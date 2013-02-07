@@ -7,18 +7,8 @@
 #include <vector>
 #include <boost/functional/hash.hpp>
 
-typedef std::array<int, 8> mc_state;
-
-namespace std {
-    template <>
-    struct hash<mc_state>{
-    public :
-        size_t operator()(const mc_state &v ) const
-        {
-            return boost::hash_range(v.begin(), v.end());
-        }
-    };
-}
+const int CONFIG_SIZE = 8;
+typedef std::array<int, CONFIG_SIZE> mc_state;
 
 class MagicConfig : public Config<mc_state> {
 public:
@@ -56,5 +46,16 @@ private:
     const mc_state goalConfig;
 };
 
+
+namespace std {
+    template <>
+    struct hash<mc_state>{
+    public :
+        size_t operator()(const mc_state &v ) const
+        {
+            return boost::hash_range(v.begin(), v.end());
+        }
+    };
+}
 
 #endif
