@@ -153,4 +153,40 @@ Design:
     differs from the other config classes in that it is able to output to a
     specified ostream instead of using cout.
 
-Revision history:
+Revision history (git):
+
+commit 488935b058b1c8a1d27c5dc22696b771365a4036
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Thu Feb 7 15:42:03 2013 -0500
+
+    Updated readme
+
+commit 89e141a0ae8c96b30dd821d82d2c42b3d3e4de06
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Thu Feb 7 15:39:35 2013 -0500
+
+    Added magic puzzle
+
+commit fd4f96c928549332f417c82338f1bd99c36b0362
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Tue Feb 5 17:44:35 2013 -0500
+
+    Updated CMake files
+
+commit a7a642e7badbf9fcc285f0d5390850963afb9857
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Tue Feb 5 17:40:46 2013 -0500
+
+    Added light puzzle
+
+commit a0d103b7bc14d01947264c92b12c0662921d8146
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Tue Feb 5 01:01:57 2013 -0500
+
+    CMake files added
+
+commit 694dc3a4db04124c3e455a2594a16a36d584bd16
+Author: Matt Swain <mds1482@rit.edu>
+Date:   Tue Feb 5 01:01:19 2013 -0500
+
+    Moved files, using unordered_map
