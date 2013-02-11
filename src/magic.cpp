@@ -43,12 +43,6 @@ int main(int argc, char *argv[]) {
     }
     MagicConfig config(goalState);
 
-    cout << "Starting config" << endl;
-    config.display(startState);
-
-    cout << "Ending state" << endl;
-    config.display(goalState);
-
     // There should always be a solution to this puzzle
     vector<mc_state> solution;
     solveConfig(config, startState, solution);

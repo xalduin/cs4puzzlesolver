@@ -50,7 +50,6 @@ void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
     // Step one: swap the bottom half and top half
     mc_state newState;
     copy(s.begin(), s.end(), newState.begin());
-    memcpy(&newState, &s, configSize);
     for( int i = 0; i < halfSize; ++i ) {
         swap(newState[i], newState[configSize-i-1]);
     }
@@ -62,7 +61,7 @@ void MagicConfig::nextConfigs(const mc_state &s, vector<mc_state> &out) const {
     
     copy(s.begin(), s.end(), newState.begin());
     for( int i = 0; i < halfSize-1; i++ ) {
-        swap(newState[halfSize - i], newState[halfSize - 1 - i]);
+        swap(newState[halfSize - 1 - i], newState[halfSize - 2 - i]);
         swap(newState[halfSize + i], newState[halfSize + 1 + i]);
     }
     out.push_back(newState);
