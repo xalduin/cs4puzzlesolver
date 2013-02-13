@@ -3,12 +3,9 @@
 
 
 #include "config.h"
-#include <array>
 #include <vector>
-#include <boost/functional/hash.hpp>
 
-const int CONFIG_SIZE = 8;
-typedef std::array<int, CONFIG_SIZE> mc_state;
+typedef  std::vector<int> mc_state;
 
 class MagicConfig : public Config<mc_state> {
 public:
@@ -17,7 +14,7 @@ public:
      * Constructs a MagicConfig with the specified goal state
      * @param goal the state that must be reached to achieve the goal
      */
-    MagicConfig(mc_state goal);
+    MagicConfig(const mc_state &goal, int size);
 
     /**
      * Displays the given config state to stdout
@@ -40,22 +37,10 @@ public:
     virtual void nextConfigs(const mc_state &state,
             std::vector<mc_state> &out) const;
 
-public:
-    static const int configSize;
 private:
-    const mc_state goalConfig;
+    const int configSize;
+    const mc_state goalState;
 };
 
-
-namespace std {
-    template <>
-    struct hash<mc_state>{
-    public :
-        size_t operator()(const mc_state &v ) const
-        {
-            return boost::hash_range(v.begin(), v.end());
-        }
-    };
-}
 
 #endif
