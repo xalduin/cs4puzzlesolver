@@ -1,0 +1,110 @@
+Matthew Swain - mds1482
+
+Clock:
+======
+
+Usage:
+    clock hours start stop
+ex: clock 12 4 10
+
+Sample run:
+
+%clock 12 2 4
+Step 0: 2
+Step 1: 3
+Step 2: 4
+
+
+Water Puzzle:
+=============
+
+Usage:
+    water goal_volume capacity1 capacity2 capacity3 capacityN
+
+Sample run:
+
+%water 4 3 5
+Step 0: 0 0
+Step 1: 0 5
+Step 2: 3 2
+Step 3: 0 2
+Step 4: 2 0
+Step 5: 2 5
+Step 6: 3 4
+
+
+Lights Off:
+===========
+
+Usage:
+    lights input_file output_file num_lights
+
+Where input_file and output_file may be either filenames or - to use stdin or
+stdout.
+
+Sample run:
+%lights lights1.in - 1
+Step 0
+.*.
+**.
+.**
+
+Step 1
+...
+..*
+..*
+
+Step 2
+...
+...
+.*.
+
+
+Magic:
+======
+
+Usage: magic # # # # # # # #
+Where each number is in the range of 1 to 8 without any duplicate numbers
+
+Sample run:
+
+%magic 8 7 6 5 4 3 2 1
+Step 0:
+1 2 3 4
+8 7 6 5
+
+Step 1:
+8 7 6 5
+1 2 3 4
+
+Design:
+    The puzzle's job is to provide the solver with methods to retrieve neighbor
+    configurations as well as a method to check if the current puzzle state
+    meets the specified goal.
+
+    Given a puzzle config and a starting state, the solver uses a breadth first
+    search to find the shortest path solution to the specified goal. It doesn't
+    know anything about the puzzle except for the methods given to it by the
+    puzzle config. These methods include retrieving neighbor configs and
+    checking for a goal state.
+
+    The configs are each able to use a different value for a "state value"
+    because they extend from a templated Config class and the solveConfig
+    function is also templated. Internally, the Config classes store only
+    what is necessary to determine whether the goal has been reached and
+    whatever information is needed to generate neighbor configurations in
+    addition to the state value that is supplied to them.
+
+    The Solver uses these methods from Config:
+
+        bool isGoal(const T &state) const;
+        void nextConfigs(std::vector<T> &out) const;
+
+    In this case, T refers to the variable type that is used to store the state
+    of the puzzle being solved. For the clock puzzle, T is an int while for the
+    water puzzle, T is of the type std::vector<int> to represent how much water
+    is being held by multiple containers.
+
+    An additional display method was added to the lightconfig.cpp class that
+    differs from the other config classes in that it is able to output to a
+    specified ostream instead of using cout.
