@@ -23,4 +23,4 @@ Example:
 
 Running
 =======
-To run the program, check info/readme for more information for each specific puzzle. Example input and output is also provided.
+Check [info/readme](info/readme) for more information about the project and how to run each individual puzzle.
